@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="svega-common-utils:jar-core">
+    <output-path>$PROJECT_DIR$/out/artifacts/svega_common_utils_jar_core</output-path>
+    <root id="archive" name="svega-common-utils-core.jar">
+      <element id="module-output" name="svega-common-utils" />
+    </root>
+  </artifact>
+</component>
