@@ -2,5 +2,5 @@ package com.svega.common
 
 import com.svega.common.version.Extra
 
-class Version: com.svega.common.version.Version(0,1,0,
-        makeExtra(Extra.ALPHA, 1))
+class Version: com.svega.common.version.Version(0,2,1,
+        makeExtra(Extra.BETA, 2))
