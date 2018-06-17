@@ -4,11 +4,21 @@ open class Version(val major: Int, val minor: Int, val bugfix: Int, val extra: S
     val versionString = "$major.$minor.$bugfix $extra"
 
     companion object {
-        @Throws(IllegalArgumentException::class)
+        val loaded = HashMap<String, Version>() //string for package path, version of that
+        @Throws(IllegalArgumentException::class, NullPointerException::class)
         fun requires(packageName: String, major: Int, minMinor: Int){
+            if(loaded.containsKey(packageName)){
+                val version = if (loaded[packageName] != null) loaded[packageName]!! else throw NullPointerException("Expression 'loaded.get(packageName)' must not be null")
+                if(version.major != major)
+                    throw VersionMismatchException("Package $packageName is major version ${version.major}, requested $major")
+                if(version.minor < minMinor)
+                    throw VersionMismatchException("Package $packageName is minor version ${version.minor}, requested minimum $minMinor")
+                return
+            }
             val clz = Class.forName("$packageName.Version")
             try{
                 val version = clz.getConstructor().newInstance() as Version
+                loaded[packageName] = version
                 if(version.major != major)
                     throw VersionMismatchException("Package $packageName is major version ${version.major}, requested $major")
                 if(version.minor < minMinor)
